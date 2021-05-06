@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:prestassistant/src/models/orders_models.dart';
+import 'package:prestassistant/src/models/customers_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:prestassistant/src/shared_prefs/prefs_user.dart';
 
@@ -14,21 +14,21 @@ final prefs = new PrefsUser();
 final String _url = prefs.uri;
 final String _token = prefs.token;
 
-class OrdersService with ChangeNotifier {
-  List<Order> orders = [];
+class CustomersService with ChangeNotifier {
+  List<Customer> customers = [];
 
-  OrdersService() {
-    this.getOrders();
+  CustomersService() {
+    this.getCustomers();
   }
 
-  getOrders() async {
-    final url = Uri.parse('$_url/api/orders?display=[id,date_add,payment,total_paid,reference]&output_format=JSON');
+  getCustomers() async {
+    final url = Uri.parse('$_url/api/customers?display=[id,firstname,lastname]&output_format=JSON');
 
     final resp = await http.get(url, headers: {HttpHeaders.authorizationHeader: "Basic $_token"});
     print(resp.statusCode);
 
-    final ordersResponse = ordersReponseFromJson(resp.body);
-    this.orders.addAll(ordersResponse.orders);
+    final customersResponse = customersResponseFromJson(resp.body);
+    this.customers.addAll(customersResponse.customers);
     notifyListeners();
   }
 }

@@ -30,10 +30,7 @@ class _Order extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
-        _OrderTopBar(order, index),
-        _OrderData(order),
-      ],
+      children: <Widget>[_OrderTopBar(order, index), _OrderData(order), Divider()],
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prestassistant/src/pages/customers_page.dart';
 import 'package:prestassistant/src/pages/orders_page.dart';
 import 'package:provider/provider.dart';
 
@@ -8,7 +9,7 @@ class TabPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => new _NavegacionModel(),
       child: Scaffold(
-        body: _Paginas(),
+        body: Container(padding: EdgeInsets.fromLTRB(5, 20, 5, 0), child: _Paginas()),
         bottomNavigationBar: _Navegacion(),
       ),
     );
@@ -21,6 +22,8 @@ class _Navegacion extends StatelessWidget {
     final navegacionModel = Provider.of<_NavegacionModel>(context);
 
     return BottomNavigationBar(
+      backgroundColor: Color(0xff411452),
+      fixedColor: Color(0xff840e5f),
       type: BottomNavigationBarType.fixed,
       currentIndex: navegacionModel.paginaActual,
       onTap: (i) => navegacionModel.paginaActual = i,
@@ -41,22 +44,15 @@ class _Paginas extends StatelessWidget {
 
     return PageView(controller: navegacionModel.pageController, physics: NeverScrollableScrollPhysics(), children: <Widget>[
       Container(
-        color: Colors.red,
         child: Center(
-          child: Text('POCHA'),
+          child: Text('DASHBOARD'),
         ),
       ),
       OrdersPage(),
+      CustomersPage(),
       Container(
-        color: Colors.purple,
         child: Center(
-          child: Text('TE'),
-        ),
-      ),
-      Container(
-        color: Colors.pink,
-        child: Center(
-          child: Text('QUIERO'),
+          child: Text('PRODUCTS'),
         ),
       ),
     ]);

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:prestassistant/src/pages/tabs_page.dart';
+import 'package:prestassistant/src/pages/initial_setting.dart';
 
 class OnBoardingPage extends StatelessWidget {
   void _onIntroEnd(context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => TabPage()),
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => InitialSetting()),
     );
   }
 

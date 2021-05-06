@@ -1,21 +1,23 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:prestassistant/src/pages/initial_setting.dart';
 import 'package:prestassistant/src/pages/onboarding_page.dart';
-import 'package:prestassistant/src/pages/tabs_page.dart';
+import 'package:prestassistant/src/services/customers_services.dart';
 import 'package:prestassistant/src/services/orders_services.dart';
+import 'package:prestassistant/src/shared_prefs/prefs_user.dart';
 import 'package:prestassistant/src/theme/tema.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 int initScreen;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  initScreen = prefs.getInt("initScreen");
-  await prefs.setInt("initScreen", 1);
-  print(initScreen);
+  final prefs = new PrefsUser();
+  await prefs.initPrefs();
+  initScreen = prefs.initScreen;
+  prefs.initScreen = 1;
+  print(prefs.key);
   runApp(MyApp());
 }
 
@@ -25,12 +27,13 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => new OrdersService()),
+        ChangeNotifierProvider(create: (_) => new CustomersService()),
       ],
       child: MaterialApp(
         title: 'Material App',
         theme: miTema,
         debugShowCheckedModeBanner: false,
-        home: initScreen == 0 || initScreen == null ? OnBoardingPage() : TabPage(),
+        home: initScreen == 0 || initScreen == null ? OnBoardingPage() : InitialSetting(),
       ),
     );
   }
